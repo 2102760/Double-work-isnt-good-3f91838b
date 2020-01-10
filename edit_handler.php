@@ -1,5 +1,10 @@
 <?php
-
+function redirect($url) {
+    ob_start();
+    header('Location: '.$url);
+    ob_end_flush();
+    die();
+}
 $host = '127.0.0.1';
 $db = 'netland';
 $user = 'root';
@@ -29,16 +34,15 @@ $query = <<<EOT
                             country = '${_POST['country']}',
                             language = '${_POST['language']}',
                             rating = '${_POST['rating']}',
-                            title = '${_POST['title']}'
+                            title = '${_POST['title']}',
+                            description = '${_POST['description']}'
                         WHERE 
                             id = '${id}'
                         ;
                     EOT
 ;
 
-var_dump($query);
-
 $result = $pdo->query($query)->fetch();
 
-var_dump($result);
+redirect("index.php");
 ?>
